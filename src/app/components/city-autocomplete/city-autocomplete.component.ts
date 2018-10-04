@@ -46,7 +46,7 @@ export class CityAutocompleteComponent implements OnInit, ControlValueAccessor {
     this.form.get('city').valueChanges.subscribe(() => {
       let cityName = this.form.get('city').value;
       let zip = this.form.get('zip').value;
-      this.preview = this.cities.filter( city => city.city.includes(cityName));
+      this.preview = this.cities.filter( city => city.city.toLowerCase().includes(cityName));
       this.clearPreview(cityName, zip);
     });
   }
@@ -57,7 +57,8 @@ export class CityAutocompleteComponent implements OnInit, ControlValueAccessor {
   }
 
   clearPreview(city: string, zip: string) {
-    if (this.preview.filter( c => c.city === city && c.zip === zip).length > 0) {
+    if (this.preview.filter( c => c.city === city && c.zip === zip).length > 0
+      || city == '' && zip == '') {
       this.preview = null;
     }
   }

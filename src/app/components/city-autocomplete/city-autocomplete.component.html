@@ -1,8 +1,11 @@
 <form [formGroup]="form">
   <div class="row">
-    <div class="col-3">
-      <label for="zip">PLZ</label>
-      <input type="text" formControlName="zip" id="zip">
+    <div class="autocomplete col-3">
+        <label for="zip">PLZ</label>
+        <input type="text" formControlName="zip" id="zip">
+        <ul class="autocomplete-items">
+          <li *ngFor="let city of preview" (click)="setSelected(city)">{{city.zip + ' ' + city.city}}</li>
+        </ul>
     </div>
     <div class="col-3">
       <label for="city">Ort</label>
@@ -10,7 +13,4 @@
     </div>
   </div>
 </form>
-<ul>
-  <li *ngFor="let city of preview" (click)="setSelected(city)">{{city.zip + ' ' + city.city}}</li>
-</ul>
 <button (click)="clearForm()">clear</button>

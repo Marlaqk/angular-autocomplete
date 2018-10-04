@@ -37,17 +37,29 @@ export class CityAutocompleteComponent implements OnInit, ControlValueAccessor {
     this.cities.push(new Place('8400', 'Winterthur'));
 
     this.form.get('zip').valueChanges.subscribe(() => {
-        this.preview = this.cities.filter(city => city.zip.startsWith(this.form.get('zip').value));
+        let cityName = this.form.get('city').value;
+        let zip = this.form.get('zip').value;
+        this.preview = this.cities.filter(city => city.zip.startsWith(zip));
+        this.clearPreview(cityName, zip);
     });
 
     this.form.get('city').valueChanges.subscribe(() => {
-      this.preview = this.cities.filter( city => city.city.includes(this.form.get('city').value));
+      let cityName = this.form.get('city').value;
+      let zip = this.form.get('zip').value;
+      this.preview = this.cities.filter( city => city.city.includes(cityName));
+      this.clearPreview(cityName, zip);
     });
   }
 
   setSelected(city: Place) {
     this.form.setValue(city);
     this.preview = null;
+  }
+
+  clearPreview(city: string, zip: string) {
+    if (this.preview.filter( c => c.city === city && c.zip === zip).length > 0) {
+      this.preview = null;
+    }
   }
 
   clearForm() {
